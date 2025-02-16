@@ -181,7 +181,7 @@ const extensionImpl: ConfigExtensionImpl = {
             throw new Error(`Device connection not established`)
         }
 
-        return await this.device.spawn(this.target.package)   
+        return await this.device.spawn(this.target.package)
     },
     
 
@@ -193,7 +193,17 @@ const extensionImpl: ConfigExtensionImpl = {
         let pid = -1
         const pref = this.getAttachPreferenceInDetails()
         if (pref.spawn === 'always') {
-            return await this.device.attach(await this.spawnAppSession())
+            try {
+                const pid = await this.spawnAppSession()
+
+                if (!pid) {
+                    throw new Error(`Failed to spawn target process (${pid})`)
+                }
+
+                return await this.device.attach(pid)
+            } catch (ex) {
+                throw new Error(`Failed to spawn target process: ${ex}`)
+            }
         }
 
         try {
