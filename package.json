@@ -1,6 +1,6 @@
 {
   "name": "frida-host",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Multi-file support for frida",
   "bin": "dist/cli.js",
   "types": "dist/index.d.ts",
