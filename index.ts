@@ -105,6 +105,7 @@ export async function startHost(conf: HostCompleteConfig) {
     const pref = conf.getAttachPreferenceInDetails()
     for (let i = 0; i < pref.maxAttempts && !session; i++) {
         try {
+            logger.log(`Attempting to create session...`)
             session = await conf.tryCreateSession()
         } catch(ex) {
             logger.log(`App not found, retrying in ${pref.delay / 1000}s...`)
